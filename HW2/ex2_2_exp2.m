@@ -12,7 +12,8 @@ iterTestErrors = zeros(repeates, 1);
 
 meanTrainErrors = zeros(length(n), 1);
 meanTestErrors = zeros(length(n), 1);
-minMaxTrainErrors = zeros(length(n), 2);
+meanMaxTrainErrors = zeros(length(n), 2);
+meanMaxTestErrors = zeros(length(n), 2);
 
 for i=1:length(n)
     for j=repeates
@@ -31,7 +32,8 @@ for i=1:length(n)
     end
     meanTrainErrors(i) = mean(iterTrainErrors);
     meanTestErrors(i) = mean(iterTestErrors);
-    minMaxTrainErrors(i,:) = [min(iterTrainErrors), max(iterTrainErrors)];
+    meanMaxTrainErrors(i,:) = [mean(iterTrainErrors), max(iterTrainErrors)];
+    meanMaxTestErrors(i,:) = [mean(iterTestErrors), max(iterTestErrors)];
 end
 
 % Calculate lambdas and plot it on logarithmic scale
@@ -50,6 +52,11 @@ legend('train error', 'test error', 'Location','southeast')
 hold('off');
 
 figure
-bar(n, minMaxTrainErrors);
+bar(meanMaxTrainErrors);
 xlabel("log(Lambda)");
-ylabel("min Max Train Errors");
+ylabel("Mean Max Train Errors");
+
+figure
+bar(meanMaxTestErrors);
+xlabel("log(Lambda)");
+ylabel("Mean Max Test Errors");
