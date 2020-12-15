@@ -4,7 +4,6 @@ repeates = 10;
 cifar_data = load('EX2q2_data.mat');
 
 n = [0:15];
-%n = [3,6,9,12,15];
 lambdas = zeros(length(n), 1);
 
 iterTrainErrors = zeros(repeates, 1);
@@ -30,18 +29,17 @@ for i=1:length(n)
         iterTrainErrors(j) = mean(sign(Xtrain*w) ~= Ytrain);
         iterTestErrors(j) = mean(sign(Xtest*w) ~= Ytest);
     end
+    % Calculate lambda iteration errors
     meanTrainErrors(i) = mean(iterTrainErrors);
     meanTestErrors(i) = mean(iterTestErrors);
     meanMaxTrainErrors(i,:) = [mean(iterTrainErrors), max(iterTrainErrors)];
     meanMaxTestErrors(i,:) = [mean(iterTestErrors), max(iterTestErrors)];
 end
 
-% Calculate lambdas and plot it on logarithmic scale
-% disp("minTrainErrors: ")
-% disp(minTrainErrors);
 disp("meantrainErrors: ")
 disp(meantrainErrors);
 
+% Plot mean iteration errors
 figure
 plot(n, meanTrainErrors);
 xlabel("log(Lambda)");
@@ -51,11 +49,13 @@ plot(n, meanTestErrors);
 legend('train error', 'test error', 'Location','southeast')
 hold('off');
 
+% Graph mean and max errors - for train data
 figure
 bar(meanMaxTrainErrors);
 xlabel("log(Lambda)");
 ylabel("Mean Max Train Errors");
 
+% Graph mean and max errors - for test data
 figure
 bar(meanMaxTestErrors);
 xlabel("log(Lambda)");

@@ -26,7 +26,7 @@ for i=1:length(n)
     t = toc;
     fprintf("Finished calculating softsvm, iteration: %d, time: %f\n", i, t);
 
-    % Calculate iteration errors
+    % Calculate lambda iteration errors
     meanTestErrors(i) = mean(sign(Xtest*w) ~= Ytest);
     disp("meantestErrors(i):");
     disp(meanTestErrors(i));
@@ -38,9 +38,6 @@ for i=1:length(n)
     meanMaxTrainErrors(i,:) = [mean(meanTrainErrors(i)), max(meanTrainErrors(i))];
    
 end
-% Calculate accumulated errors
-% minMaxTestErrors = [min(meanTestErrors), mean(meanTestErrors), max(meanTestErrors)];
-% minMaxTrainErrors = [min(meanTrainErrors), mean(meanTrainErrors), max(meanTrainErrors)];
 
 disp("Avg: ")
 disp(meanTestErrors);
@@ -60,24 +57,14 @@ M2 = "Train Error";
 legend([a1;a2], M1, M2, 'Location','southeast')
 hold('off');
 
+% Graph mean and max errors - for test data
 figure
 bar(meanMaxTestErrors);
 xlabel("log(Lambda)");
 ylabel("Mean Max Test Errors");
 
+% Graph mean and max errors - for train data
 figure
 bar(meanMaxTrainErrors);
 xlabel("log(Lambda)");
 ylabel("Mean Max Train Errors");
-
-% % Plot accumulated errors
-% figure
-% x = categorical(["Min", "Mean", "Max"]);
-% x = reordercats(x,["Min", "Mean", "Max"]);
-% bar(x, minMaxTestErrors);
-% xlabel("train and test errors");
-% ylabel("Min Mean Max sample error");
-% hold('on');
-% bar(x, minMaxTrainErrors);
-% legend('test errors', 'train errors', 'Location','southeast')
-% hold('off');
