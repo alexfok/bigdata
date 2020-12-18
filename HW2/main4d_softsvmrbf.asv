@@ -1,0 +1,29 @@
+data = load("EX2q4_data.mat");
+Xtrain = data.Xtrain;
+Xtest = data.Xtest;
+Ytrain = data.Ytrain;
+Ytest = data.Ytest;
+
+sigmas = [0.01, 0.5, 1];
+
+lambda = 100;
+sigma = 0.01;
+alpha = softsvmrbf(lambda, sigma, Xtrain, Ytrain);
+new_y = softsvmrbf_predict(Xtrain, Xtrain, Ytrain, alpha, sigma);
+predictedY = sign(new_y);
+% tbl = table(predictedY, Ytrain, alpha);
+figure
+% hold on
+heatmap(tbl, 'predictedY','Ytrain');
+% gscatter(Xtrain(:,1), Xtrain(:,2), Ytrain, 'rb', 'o', 5);
+% hold off
+% sigma = 0.5;
+% alpha = softsvmrbf(lambda, sigma, Xtrain, Ytrain);
+% new_y = softsvmrbf_predict(Xtest, Xtrain, Ytrain, alpha, sigma);
+% labels = sign(new_y);
+% 
+% sigma = 1;
+% alpha = softsvmrbf(lambda, sigma, Xtrain, Ytrain);
+% new_y = softsvmrbf_predict(Xtest, Xtrain, Ytrain, alpha, sigma);
+% labels = sign(new_y);
+
