@@ -1,4 +1,4 @@
-function alpha = softsvmrbf(lambda, sigma, Xtrain, Ytrain)
+function alpha = softsvmrbf(lambda, sigma, Xtrain, Ytrain) 
     % Building Gaussian Kernel
     Kernel = rbf_kernel(Xtrain, Xtrain, sigma);
     % Calculating Alphas
